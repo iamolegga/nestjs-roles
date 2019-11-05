@@ -1,0 +1,9 @@
+__tests__/
+coverage/
+src/
+.mergify.yml
+.prettierrc
+.travis.yml
+tsconfig.build.json
+tsconfig.json
+tslint.json
