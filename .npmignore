@@ -7,3 +7,4 @@ src/
 tsconfig.build.json
 tsconfig.json
 tslint.json
+.tsbuildinfo
