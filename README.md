@@ -11,7 +11,7 @@
   <a href="https://coveralls.io/github/iamolegga/nestjs-roles?branch=master">
     <img alt="Coverage Status" src="https://coveralls.io/repos/github/iamolegga/nestjs-roles/badge.svg?branch=master" />
   </a>
-  <img alt="Supported platforms: Express" src="https://img.shields.io/badge/platforms-Express-green" />
+  <img alt="Supported platforms: Express & Fastify" src="https://img.shields.io/badge/platforms-Express%20%26%20Fastify-green" />
 </p>
 <p align="center">
   <a href="https://snyk.io/test/github/iamolegga/nestjs-roles">
