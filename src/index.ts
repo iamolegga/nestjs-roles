@@ -5,7 +5,9 @@ import { roleReflectionToken } from './role-reflection-token';
 import { RolesGuardStatic } from './roles-guard-static';
 
 export function createRolesGuard<R>(
-  getRole: (context: ExecutionContext) => R | undefined,
+  getRole: (
+    context: ExecutionContext,
+  ) => R | undefined | Promise<R | undefined>,
 ): RolesGuardStatic<R> {
   return class RolesGuard implements CanActivate {
     static readonly Params = (...allowedRoles: [R, ...R[]] | [boolean]) =>
@@ -13,7 +15,7 @@ export function createRolesGuard<R>(
 
     constructor(private readonly reflector: Reflector) {}
 
-    canActivate(context: ExecutionContext) {
+    async canActivate(context: ExecutionContext) {
       const requiredRoles = this.reflector.getAllAndOverride<
         [R, ...R[]] | [boolean] | undefined
       >(roleReflectionToken, [context.getHandler(), context.getClass()]);
@@ -23,7 +25,7 @@ export function createRolesGuard<R>(
         return true;
       }
 
-      const role = getRole(context);
+      const role = await getRole(context);
 
       return checkRoles(requiredRoles, role);
     }
