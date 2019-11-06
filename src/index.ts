@@ -3,40 +3,24 @@ import {
   ExecutionContext,
   ForbiddenException,
   SetMetadata,
-  Type,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-
-const roleReflectionToken = 'nestjs-roles';
-
-type RoleParams<T> = [T, ...T[]] | [boolean];
-
-export interface RolesGuardStatic<R> {
-  Params(...allowedRoles: RoleParams<R>): ReturnType<typeof SetMetadata>;
-}
+import { roleReflectionToken } from './role-reflection-token';
+import { RolesGuardStatic } from './roles-guard-static';
 
 export function createRolesGuard<R>(
   getRole: (context: ExecutionContext) => R | undefined,
-): Type<CanActivate> & RolesGuardStatic<R> {
+): RolesGuardStatic<R> {
   return class RolesGuard implements CanActivate {
-    /**
-     * Decorator for controller or handler to specify allowed roles.
-     * For certain roles pass it to decorator.
-     * Pass `false` to make controller or handler be allowed only for
-     * unauthorized users.
-     * Pass `true` to make controller or handler be allowed only for
-     * authorized users (with any role).
-     * Do not use it to make controller or handler bew allowed for all.
-     */
-    static readonly Params = (...allowedRoles: RoleParams<R>) =>
+    static readonly Params = (...allowedRoles: [R, ...R[]] | [boolean]) =>
       SetMetadata(roleReflectionToken, allowedRoles);
 
     constructor(private readonly reflector: Reflector) {}
 
     canActivate(context: ExecutionContext) {
       const requiredRoles = this.reflector.getAllAndOverride<
-        RoleParams<R> | undefined
+        [R, ...R[]] | [boolean] | undefined
       >(roleReflectionToken, [context.getHandler(), context.getClass()]);
 
       // roles are not set - handler is allowed for all
@@ -59,6 +43,7 @@ export function createRolesGuard<R>(
         if (role!) {
           throw new UnauthorizedException();
         }
+
         // handler is allowed for certain roles
       } else {
         // there is no any role
@@ -67,9 +52,7 @@ export function createRolesGuard<R>(
         }
 
         // role is not one of requireds
-        if (
-          !(requiredRoles as Exclude<RoleParams<R>, [boolean]>).includes(role)
-        ) {
+        if (!(requiredRoles as [R, ...R[]]).includes(role)) {
           throw new ForbiddenException();
         }
       }
