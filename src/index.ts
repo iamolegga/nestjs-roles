@@ -24,7 +24,7 @@ export function createRolesGuard<R>(
       >(roleReflectionToken, [context.getHandler(), context.getClass()]);
 
       // roles are not set - handler is allowed for all
-      if (!requiredRoles || !requiredRoles.length) {
+      if (!requiredRoles) {
         return true;
       }
 
@@ -37,24 +37,29 @@ export function createRolesGuard<R>(
           throw new ForbiddenException();
         }
 
-        // handler is allowed for any authorized
-      } else if (requiredRoles[0] === true) {
+        return true;
+      }
+
+      // handler is allowed for any authorized
+      if (requiredRoles[0] === true) {
         // but there is not any role
         if (role!) {
           throw new UnauthorizedException();
         }
 
-        // handler is allowed for certain roles
-      } else {
-        // there is no any role
-        if (!role) {
-          throw new UnauthorizedException();
-        }
+        return true;
+      }
 
-        // role is not one of requireds
-        if (!(requiredRoles as [R, ...R[]]).includes(role)) {
-          throw new ForbiddenException();
-        }
+      // handler is allowed for certain roles
+
+      // there is no any role
+      if (!role) {
+        throw new UnauthorizedException();
+      }
+
+      // role is not one of requireds
+      if (!(requiredRoles as [R, ...R[]]).includes(role)) {
+        throw new ForbiddenException();
       }
 
       return true;
