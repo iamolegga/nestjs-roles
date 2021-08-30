@@ -12,7 +12,7 @@ const Guard = createRolesGuard<Role>(function getRole(
   context: ExecutionContext,
 ) {
   const { headers }: Request = context.switchToHttp().getRequest();
-  return ((headers as any) as { role: Role }).role || undefined;
+  return (headers as any as { role: Role }).role || undefined;
 });
 
 for (const platform of platforms) {
