@@ -6,6 +6,7 @@ import { platforms } from './utils/platforms';
 enum Role {
   USER = 'USER',
   ADMIN = 'ADMIN',
+  MODERATOR = 'MODERATOR',
 }
 
 const Guard = createRolesGuard<Role>(function getRole(
@@ -42,6 +43,11 @@ for (const platform of platforms) {
         expect(fn).toHaveBeenCalledTimes(1);
       });
 
+      it('should pass users with array of roles', async () => {
+        await createTest(controller, Guard, platform, [Role.ADMIN]);
+        expect(fn).toHaveBeenCalledTimes(1);
+      });
+
       it('should pass users without roles', async () => {
         await createTest(controller, Guard, platform, null);
         expect(fn).toHaveBeenCalledTimes(1);
@@ -64,6 +70,11 @@ for (const platform of platforms) {
 
       it('should not pass users with roles', async () => {
         await createTest(controller, Guard, platform, Role.ADMIN);
+        expect(fn).toHaveBeenCalledTimes(0);
+      });
+
+      it('should not pass users with array of roles', async () => {
+        await createTest(controller, Guard, platform, [Role.ADMIN]);
         expect(fn).toHaveBeenCalledTimes(0);
       });
 
@@ -92,6 +103,11 @@ for (const platform of platforms) {
         expect(fn).toHaveBeenCalledTimes(1);
       });
 
+      it('should pass users with array of roles', async () => {
+        await createTest(controller, Guard, platform, [Role.ADMIN]);
+        expect(fn).toHaveBeenCalledTimes(1);
+      });
+
       it('should not pass users without roles', async () => {
         await createTest(controller, Guard, platform, null);
         expect(fn).toHaveBeenCalledTimes(0);
@@ -117,8 +133,21 @@ for (const platform of platforms) {
         expect(fn).toHaveBeenCalledTimes(1);
       });
 
+      it('should pass users with allowed roles in array', async () => {
+        await createTest(controller, Guard, platform, [Role.ADMIN, Role.USER]);
+        expect(fn).toHaveBeenCalledTimes(1);
+      });
+
       it('should not pass users with not allowed roles', async () => {
         await createTest(controller, Guard, platform, Role.USER);
+        expect(fn).toHaveBeenCalledTimes(0);
+      });
+
+      it('should not pass users with not allowed roles in array', async () => {
+        await createTest(controller, Guard, platform, [
+          Role.USER,
+          Role.MODERATOR,
+        ]);
         expect(fn).toHaveBeenCalledTimes(0);
       });
 

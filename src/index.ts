@@ -7,7 +7,7 @@ import { RolesGuardStatic } from './roles-guard-static';
 export function createRolesGuard<R>(
   getRole: (
     context: ExecutionContext,
-  ) => R | undefined | Promise<R | undefined>,
+  ) => R | R[] | undefined | Promise<R | R[] | undefined>,
 ): RolesGuardStatic<R> {
   return class RolesGuard implements CanActivate {
     static readonly Params = (...allowedRoles: [R, ...R[]] | [boolean]) =>
