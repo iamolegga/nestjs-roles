@@ -13,7 +13,16 @@ const Guard = createRolesGuard<Role>(function getRole(
   context: ExecutionContext,
 ) {
   const { headers }: Request = context.switchToHttp().getRequest();
-  return (headers as any as { role: Role | Role[] }).role || undefined;
+
+  const { role } = headers as any as { role: string };
+
+  if (role) {
+    return role.replace(/\s/g, '').split(',').length > 1
+      ? (role.replace(/\s/g, '').trim().split(',') as any as Role[])
+      : (role as Role);
+  }
+
+  return undefined;
 });
 
 for (const platform of platforms) {
@@ -44,7 +53,7 @@ for (const platform of platforms) {
       });
 
       it('should pass users with array of roles', async () => {
-        await createTest(controller, Guard, platform, [Role.ADMIN]);
+        await createTest(controller, Guard, platform, [Role.ADMIN, Role.USER]);
         expect(fn).toHaveBeenCalledTimes(1);
       });
 
@@ -74,7 +83,7 @@ for (const platform of platforms) {
       });
 
       it('should not pass users with array of roles', async () => {
-        await createTest(controller, Guard, platform, [Role.ADMIN]);
+        await createTest(controller, Guard, platform, [Role.ADMIN, Role.USER]);
         expect(fn).toHaveBeenCalledTimes(0);
       });
 
@@ -104,7 +113,7 @@ for (const platform of platforms) {
       });
 
       it('should pass users with array of roles', async () => {
-        await createTest(controller, Guard, platform, [Role.ADMIN]);
+        await createTest(controller, Guard, platform, [Role.ADMIN, Role.USER]);
         expect(fn).toHaveBeenCalledTimes(1);
       });
 
@@ -134,7 +143,7 @@ for (const platform of platforms) {
       });
 
       it('should pass users with allowed roles in array', async () => {
-        await createTest(controller, Guard, platform, [Role.ADMIN]);
+        await createTest(controller, Guard, platform, [Role.ADMIN, Role.USER]);
         expect(fn).toHaveBeenCalledTimes(1);
       });
 
