@@ -13,7 +13,7 @@ const Guard = createRolesGuard<Role>(function getRole(
   context: ExecutionContext,
 ) {
   const { headers }: Request = context.switchToHttp().getRequest();
-  return (headers as any as { role: Role }).role || undefined;
+  return (headers as any as { role: Role | Role[] }).role || undefined;
 });
 
 for (const platform of platforms) {
@@ -134,7 +134,7 @@ for (const platform of platforms) {
       });
 
       it('should pass users with allowed roles in array', async () => {
-        await createTest(controller, Guard, platform, [Role.ADMIN, Role.USER]);
+        await createTest(controller, Guard, platform, [Role.ADMIN]);
         expect(fn).toHaveBeenCalledTimes(1);
       });
 
