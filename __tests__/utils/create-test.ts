@@ -8,7 +8,7 @@ export async function createTest<R>(
   controller: any,
   Guard: RolesGuardStatic<R>,
   Adapter: Type<AbstractHttpAdapter<any, any, any>>,
-  role: R,
+  role: R | R[],
 ) {
   @Module({ controllers: [controller] })
   class TestModule {}

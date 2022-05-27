@@ -60,7 +60,10 @@ function getRole(context: ExecutionContext) {
   if (!session) {
     return;
   }
-  return (session as { role?: Role }).role;
+  
+  // you can use single role or array of roles
+  // if you provide array of roles, the guard will pass if one of roles is in required roles
+  return (session as { role?: Role | Role[] }).role;
 }
 
 export const Roles = createRolesGuard<Role>(getRole);

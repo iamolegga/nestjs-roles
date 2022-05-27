@@ -2,7 +2,7 @@ import { ForbiddenException, UnauthorizedException } from '@nestjs/common';
 
 export function checkRoles<R>(
   requiredRoles: [R, ...R[]] | [boolean],
-  role: R | undefined,
+  role: R | R[] | undefined,
 ) {
   // handler is allowed only for not authorized
   if (requiredRoles[0] === false) {
@@ -31,9 +31,24 @@ export function checkRoles<R>(
     throw new UnauthorizedException();
   }
 
-  // role is not one of requireds
-  if (!(requiredRoles as [R, ...R[]]).includes(role)) {
-    throw new ForbiddenException();
+  // check if role is not one of requireds
+
+  // if role is array of roles
+  // guard will pass if one of roles is in required roles
+  if (Array.isArray(role)) {
+    if (
+      !(requiredRoles as [R, ...R[]]).some((requiredRole) =>
+        (role as R[]).includes(requiredRole),
+      )
+    ) {
+      throw new ForbiddenException();
+    }
+  } else {
+    // if role is single role
+    // guard will pass if role is in required roles
+    if (!(requiredRoles as [R, ...R[]]).includes(role as R)) {
+      throw new ForbiddenException();
+    }
   }
 
   return true;
