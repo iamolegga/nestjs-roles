@@ -39,7 +39,7 @@
   "homepage": "https://github.com/iamolegga/nestjs-roles#readme",
   "devDependencies": {
     "@nestjs/common": "^8.0.0",
-    "@nestjs/core": "^8.0.0",
+    "@nestjs/core": "^9.0.5",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/platform-fastify": "^8.0.0",
     "@types/jest": "^27.0.1",
