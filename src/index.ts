@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, SetMetadata } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+
 import { checkRoles } from './check-roles';
 import { roleReflectionToken } from './role-reflection-token';
 import { RolesGuardStatic } from './roles-guard-static';

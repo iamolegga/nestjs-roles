@@ -1,14 +1,16 @@
 import { Module, Type } from '@nestjs/common';
 import { AbstractHttpAdapter, NestFactory, Reflector } from '@nestjs/core';
+
 import { RolesGuardStatic } from '../../src/roles-guard-static';
+
 import { fastifyExtraWait } from './fastify-extra-wait';
 import { requestWithRole } from './request-with-role';
 
-export async function createTest<R>(
-  controller: any,
+export async function createTest<R extends string>(
+  controller: Type<unknown>,
   Guard: RolesGuardStatic<R>,
-  Adapter: Type<AbstractHttpAdapter<any, any, any>>,
-  role: R | R[],
+  Adapter: Type<AbstractHttpAdapter<unknown, unknown, unknown>>,
+  role?: R | R[],
 ) {
   @Module({ controllers: [controller] })
   class TestModule {}
