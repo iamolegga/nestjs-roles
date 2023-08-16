@@ -1,5 +1,7 @@
-import { Controller, ExecutionContext, Get } from '@nestjs/common';
+import { Controller, ExecutionContext, Get, Type } from '@nestjs/common';
+
 import { createRolesGuard } from '../src';
+
 import { createTest } from './utils/create-test';
 import { platforms } from './utils/platforms';
 
@@ -14,11 +16,11 @@ const Guard = createRolesGuard<Role>(function getRole(
 ) {
   const { headers }: Request = context.switchToHttp().getRequest();
 
-  const { role } = headers as any as { role: string };
+  const { role } = headers as unknown as { role: string };
 
   if (role) {
     return role.replace(/\s/g, '').split(',').length > 1
-      ? (role.replace(/\s/g, '').trim().split(',') as any as Role[])
+      ? (role.replace(/\s/g, '').trim().split(',') as unknown as Role[])
       : (role as Role);
   }
 
@@ -28,7 +30,7 @@ const Guard = createRolesGuard<Role>(function getRole(
 for (const platform of platforms) {
   describe(platform.name, () => {
     let fn: () => void;
-    let controller: any;
+    let controller: Type<unknown>;
 
     beforeEach(() => {
       fn = jest.fn();
@@ -58,7 +60,7 @@ for (const platform of platforms) {
       });
 
       it('should pass users without roles', async () => {
-        await createTest(controller, Guard, platform, null);
+        await createTest(controller, Guard, platform);
         expect(fn).toHaveBeenCalledTimes(1);
       });
     });
@@ -88,7 +90,7 @@ for (const platform of platforms) {
       });
 
       it('should pass users without roles', async () => {
-        await createTest(controller, Guard, platform, null);
+        await createTest(controller, Guard, platform);
         expect(fn).toHaveBeenCalledTimes(1);
       });
     });
@@ -118,7 +120,7 @@ for (const platform of platforms) {
       });
 
       it('should not pass users without roles', async () => {
-        await createTest(controller, Guard, platform, null);
+        await createTest(controller, Guard, platform);
         expect(fn).toHaveBeenCalledTimes(0);
       });
     });
@@ -161,7 +163,7 @@ for (const platform of platforms) {
       });
 
       it('should not pass users without roles', async () => {
-        await createTest(controller, Guard, platform, null);
+        await createTest(controller, Guard, platform);
         expect(fn).toHaveBeenCalledTimes(0);
       });
     });
