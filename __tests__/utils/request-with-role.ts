@@ -1,6 +1,7 @@
 import request from 'supertest';
+import type { App } from 'supertest/types';
 
-export function requestWithRole(server: unknown, role?: string | string[]) {
+export function requestWithRole(server: App, role?: string | string[]) {
   if (role) {
     return (
       request(server)
