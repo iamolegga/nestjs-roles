@@ -48,7 +48,7 @@
     "@nestjs/platform-express": "^11.0.5",
     "@nestjs/platform-fastify": "^11.0.5",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.10.10",
+    "@types/node": "^24.0.0",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^8.21.0",
     "@typescript-eslint/parser": "^8.21.0",
