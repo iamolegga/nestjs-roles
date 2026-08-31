@@ -1,6 +1,6 @@
 {
   "name": "nestjs-roles",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Type safe roles guard and decorator made easy",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
