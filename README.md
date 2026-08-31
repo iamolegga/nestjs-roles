@@ -8,21 +8,32 @@
     <img alt="npm" src="https://img.shields.io/npm/dm/nestjs-roles" />
   </a>
   <a href="https://github.com/iamolegga/nestjs-roles/actions">
-    <img alt="GitHub branch checks state" src="https://badgen.net/github/checks/iamolegga/nestjs-roles" />
+    <img alt="GitHub branch checks state" src="https://badgen.net/github/checks/iamolegga/nestjs-roles/master">
   </a>
-  <a href="https://codeclimate.com/github/iamolegga/nestjs-roles/test_coverage">
-    <img src="https://api.codeclimate.com/v1/badges/267a32bd68cbc25c7f7c/test_coverage" />
+  <a href="https://qlty.sh/gh/iamolegga/projects/nestjs-roles">
+    <img src="https://qlty.sh/gh/iamolegga/projects/nestjs-roles/coverage.svg" alt="Code Coverage" />
   </a>
   <a href="https://snyk.io/test/github/iamolegga/nestjs-roles">
     <img alt="Known Vulnerabilities" src="https://snyk.io/test/github/iamolegga/nestjs-roles/badge.svg" />
   </a>
   <a href="https://libraries.io/npm/nestjs-roles">
-    <img alt="Libraries.io" src="https://img.shields.io/librariesio/release/npm/nestjs-roles" />
+    <img alt="Libraries.io" src="https://img.shields.io/librariesio/release/npm/nestjs-roles">
   </a>
-  <img alt="Dependabot" src="https://badgen.net/github/dependabot/iamolegga/nestjs-roles" />
+  <img alt="Dependabot" src="https://badgen.net/github/dependabot/iamolegga/nestjs-roles">
 </p>
 
 Type safe roles guard with the decorator for controller made easy. Just specify how to get `role` from `ExecutionContext`. `nestjs-roles` will do the rest.
+
+---
+
+<p align="center"><b>This is the documentation for v0.8. Compatibility with earlier versions:</b></p>
+
+| nestjs-roles | NestJS          | Node.js |
+| ------------ | --------------- | ------- |
+| v0.8         | 11, 12          | >=22.12 |
+| [v0.7](https://github.com/iamolegga/nestjs-roles/tree/v0.7.0#readme) | 8, 9, 10, 11 | >=18 |
+
+---
 
 ## Install
 
