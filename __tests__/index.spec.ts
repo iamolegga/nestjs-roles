@@ -33,7 +33,7 @@ for (const platform of platforms) {
     let controller: Type<unknown>;
 
     beforeEach(() => {
-      fn = jest.fn();
+      fn = vi.fn();
     });
 
     describe('if not set', () => {

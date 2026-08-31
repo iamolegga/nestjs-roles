@@ -7,7 +7,6 @@ export function requestWithRole(server: App, role?: string | string[]) {
       request(server)
         .get('/')
         // wrong types for passing array
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .set('role', role as any)
     );
   }

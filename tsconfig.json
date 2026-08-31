@@ -1,21 +1,19 @@
 {
   "compilerOptions": {
     "lib": ["ES2022"],
-    "module": "node16",
+    "types": ["node", "vitest/globals"],
+    "module": "commonjs",
     "target": "ES2022",
+    "declaration": true,
     "removeComments": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
     "sourceMap": true,
+    "inlineSources": true,
     "outDir": "./dist",
     "incremental": true,
-    "skipLibCheck": true,
     "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "typeRoots": ["src/typings", "node_modules/@types"],
-    "declaration": true
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true
   }
 }
